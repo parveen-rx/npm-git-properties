@@ -10,22 +10,22 @@ const _isNativeExecSync = childProcessLib.hasOwnProperty('spawnSync');
 const _pathSeparator = pathLib.sep;
 const _refBranch = /^ref: refs\/heads\/(.*)\n/;
 const _currentRepoName = 'NPM-GIT-PROPERTIES';
-const _detachedHeadText = 'Detached At Head: ';
+const _detachedAtHeadPrefix = 'Detached At Head: ';
 
 const _exeCmd = (cmd, args) => {
     let result;
     if (_isNativeExecSync) {
         result = childProcessLib.spawnSync(cmd, args);
     } else {
-        result = shellLib.exec(cmd + ' ' + args.join(' '), {silent: true});
+        result = shellLib.exec(`${cmd} ${args.join(' ')}`, { silent: true });
     }
-    if (_isNativeExecSync && result.status !== 0) {
-        throw new Error(_currentRepoName + ' has failed to execute command: ' + result.stderr + '/' + result.error);
-    } else if (result.code !== 0) {
-        throw new Error(_currentRepoName + ' has failed to execute command: ' + result.stdout);
+    if (result.status !== 0) {
+        const errorDetails = result.stderr || result.stdout;
+        const errorMessage = `${_currentRepoName} has failed to execute command: ${errorDetails}`;
+        throw new Error(errorMessage);
     }
-    return result.stdout.toString('utf8').replace(/^\s+|\s+$/g, '');
-}
+    return result.stdout.toString('utf8').trim();
+};
 
 const _getGitDir = (dirPath) => {
     if (dirPath === undefined || dirPath === null) {
@@ -66,7 +66,7 @@ const currentBranch = (dir) => {
     if (b) {
         return b[1];
     } else {
-        return _detachedHeadText + head.trim();
+        return _detachedAtHeadPrefix + head.trim();
     }
 }
 
@@ -75,20 +75,20 @@ const shortHash = (dir, size) => {
 }
 
 const fullHash = (dir) => {
-    const b = currentBranch(dir);
-    if (/Detached At Head: /.test(b)) {
-        return b.substr(10);
+    const currBranch = currentBranch(dir);
+    if (currBranch.startsWith(_detachedAtHeadPrefix)) {
+        return currBranch.substr(_detachedAtHeadPrefix.length);
     }
     const gitDir = _getGitDir(dir);
     const gitRootDir = gitDir.indexOf('.git/worktrees/') > 0 ?
         gitDir.replace(/\.git\/worktrees\/.+$/, '.git') :
         gitDir;
-    const refsFilePath = pathLib.resolve(gitRootDir, 'refs', 'heads', b);
+    const refsFilePath = pathLib.resolve(gitRootDir, 'refs', 'heads', currBranch);
     let ref;
     if (gracefulFsLib.existsSync(refsFilePath)) {
         ref = gracefulFsLib.readFileSync(refsFilePath, 'utf8');
     } else {
-        const refToCheck = ['refs', 'heads', b].join('/');
+        const refToCheck = ['refs', 'heads', currBranch].join('/');
         const pkgFileContents = gracefulFsLib.readFileSync(pathLib.resolve(gitDir, 'packed-refs'), 'utf8');
         const pkgFileRegex = new RegExp('(.*) ' + escapeStringRegexpLib(refToCheck));
         ref = pkgFileRegex.exec(pkgFileContents)[1];
