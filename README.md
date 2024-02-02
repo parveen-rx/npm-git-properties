@@ -7,7 +7,7 @@ Generate repository git details
 ```js
 var git = require('npm-git-properties');
 
-console.log(git.smallHash());
+console.log(git.shortHash());
 // 99ps5rr
 
 console.log(git.fullHash());
@@ -22,6 +22,10 @@ To understand better, run the samples: `npm run samples`
 ## Install
 
 `npm install npm-git-properties --save`
+
+## Inspiration
+1. https://github.com/kurttheviking/git-rev-sync-js (NPM Module)
+2. https://github.com/n0mer/gradle-git-properties (Gradle Module)
 
 ## License
 
