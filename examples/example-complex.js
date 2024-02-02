@@ -10,6 +10,7 @@ console.log('gitUtil.lastGitMsg() => ' + gitUtil.lastGitMsg());
 console.log('gitUtil.gitTag() => ' + gitUtil.gitTag());
 console.log('gitUtil.gitTag(true) => ' + gitUtil.gitTag(true));
 console.log('gitUtil.countOfAllCommits() => ' + gitUtil.countOfAllCommits());
+console.log('gitUtil.fullGitInfoAsJson() => ' + JSON.stringify(gitUtil.fullGitInfoAsJson()));
 
 if (otherDir) {
     console.log('gitUtil.shortHash(' + otherDir + ') => ' + gitUtil.shortHash(otherDir));

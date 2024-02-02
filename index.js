@@ -96,8 +96,9 @@ const fullHash = (dir) => {
     return ref.trim();
 };
 
-const lastGitMsg = () => {
-  return _exeCmd('git', ['log', '-1', '--pretty=%B']);
+const lastGitMsg = (short) => {
+    const prettyArg = short ? '--pretty=%s' : '--pretty=%B'
+    return _exeCmd('git', ['log', '-1', prettyArg]);
 };
 
 const gitTag = (flagDirty) => {
@@ -147,6 +148,41 @@ const tagFirstParent = (flagDirty) => {
     return _exeCmd('git', ['describe', '--always', '--tag', '--abbrev=0', '--first-parent']);
 };
 
+const originHttpsUrl = () => {
+    return _exeCmd('git', ['config', '--get', 'remote.origin.url']);
+};
+
+const originSshUrl = () => {
+    return _exeCmd('git', ['remote', 'get-url', 'origin']);
+};
+
+/*test below cmd*/
+const getAllTags = () => {
+    return _exeCmd('git', ['show-ref', '--tags', '-d']);
+};
+
+const gitCommitId = () => {
+    return _exeCmd('git', ['rev-parse', 'HEAD']);
+};
+
+const gitCommitIdAbbrev = () => {
+    return _exeCmd('git', ['rev-parse', '--short', 'HEAD']);
+}
+
+/*check for duplicate code*/
+const gitCommitIdDesc = () => {
+    return _exeCmd('git', ['describe', '--always', '--tags', '--abbrev=0', '--dirty']);
+}
+
+const gitCommitTime = () => {
+    return _exeCmd('git', ['log', '-1', '--pretty=format:%at']);
+}
+
+const gitCommitUserNameAndEmail = (email) => {
+    const prettyArg = email ? '--pretty=format:%ae' : '--pretty=format:%an'
+    return _exeCmd('git', ['log', '-1', prettyArg]);
+}
+
 const fullGitInfoAsJson = (appParams) => {
     const buildDetails = {
         "build" : {
@@ -162,16 +198,16 @@ const fullGitInfoAsJson = (appParams) => {
     const commitDetails = {
         "commit" : {
             "message": {
-                "short": "short commit message",
-                "full": "full commit message"
+                "short": lastGitMsg(true),
+                "full": lastGitMsg()
             },
-            "id": "commit-id",
-            "id.abbrev": "commit-id-abbrev",
-            "id.describe": "commit-id-describe",
-            "time": "commit time",
+            "id": gitCommitId(),
+            "id.abbrev": gitCommitIdAbbrev(),
+            "id.describe": gitCommitIdDesc(),
+            "time": gitCommitTime(),
             "user": {
-                "name": "ps",
-                "email": "ps@gmail.com"
+                "name": gitCommitUserNameAndEmail(),
+                "email": gitCommitUserNameAndEmail(true)
             }
         }
     };
@@ -189,13 +225,13 @@ const fullGitInfoAsJson = (appParams) => {
         "dirty": "isDirtyCheckFn",
         "remote": {
             "origin": {
-                "url": "main app git repo link"
+                "url": originSshUrl()
             }
         },
         "tags": "",
         "total": {
             "commit": {
-                "count": "integer count"
+                "count": countOfAllCommits()
             }
         }
     };
