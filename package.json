@@ -1,12 +1,35 @@
 {
   "name": "npm-git-properties",
   "version": "1.0.0",
-  "description": "",
+  "author": "parveen-rx",
+  "description": "Generate repository git details",
+  "bugs": {
+    "url": "https://github.com/parveen-rx/npm-git-properties/issues"
+  },
+  "homepage": "https://github.com/parveen-rx/npm-git-properties",
+  "license": "MIT",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "examples": "node examples/example-simple",
+    "examples-detailed": "node examples/example-complex",
+    "test": "node test-cases/tests"
   },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:parveen-rx/npm-git-properties.git"
+  },
+  "dependencies": {
+    "escape-string-regexp": "^5.0.0",
+    "graceful-fs": "^4.2.11",
+    "shelljs": "^0.8.5"
+  },
+  "devDependencies": {},
   "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "contributors": [
+    {
+      "name": "Parveen Soni",
+      "email": "thelastestcomputing@gmail.com",
+      "url": "https://about.me/parveen.soni"
+    }
+  ]
 }
