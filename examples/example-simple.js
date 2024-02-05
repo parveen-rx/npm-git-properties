@@ -1,12 +1,12 @@
 'use strict';
 
-const gitUtil = require('../index');
+const gitInfoUtil = require('../index');
 
-console.log('gitUtil.shortHash() => ' + gitUtil.shortHash());
-// e.g. 75bf4ee
+console.log('gitInfoUtil.currentBranch() => ' + gitInfoUtil.currentBranch());
+// e.g. v1.0.0
 
-console.log('gitUtil.fullHash() => ' + gitUtil.fullHash());
-// e.g. 75bf4eea9aa1a7fd6505d0d0aa43105feafa92ef
+console.log('gitInfoUtil.commitIdAbbrev() => ' + gitInfoUtil.commitIdAbbrev());
+// e.g. 18f5104
 
-console.log('gitUtil.currentBranch() => ' + gitUtil.currentBranch());
-// e.g. master
+console.log('gitInfoUtil.commitIdFull() => ' + gitInfoUtil.commitIdFull());
+// e.g. 18f51041eead0e4952bfe11987504e6fdf682a0f

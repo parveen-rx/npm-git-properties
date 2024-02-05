@@ -31,8 +31,8 @@ assert.equal(typeof result, 'boolean', 'isTagDirty() returns a boolean');
 result = git.lastGitMsg();
 assert.equal(!!result.length, true, 'lastGitMsg() returns a string with non-zero length');
 
-result = git.gitTag();
-assert.equal(!!result.length, true, 'gitTag() returns a string with non-zero length');
+result = git.commitIdDescAndTags();
+assert.equal(!!result.length, true, 'commitIdDescAndTags() returns a string with non-zero length');
 
 result = git.tagFirstParent();
 assert.equal(result.length !== 0, true, 'tagFirstParent() returns a string with non-zero length');

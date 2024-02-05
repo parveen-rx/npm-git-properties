@@ -1,19 +1,22 @@
 'use strict';
 
-const gitUtil = require('../index');
-const otherDir = '';
+const gitInfoUtil = require('../index');
 
-console.log('gitUtil.shortHash() => ' + gitUtil.shortHash());
-console.log('gitUtil.fullHash() => ' + gitUtil.fullHash());
-console.log('gitUtil.currentBranch() => ' + gitUtil.currentBranch());
-console.log('gitUtil.lastGitMsg() => ' + gitUtil.lastGitMsg());
-console.log('gitUtil.gitTag() => ' + gitUtil.gitTag());
-console.log('gitUtil.gitTag(true) => ' + gitUtil.gitTag(true));
-console.log('gitUtil.countOfAllCommits() => ' + gitUtil.countOfAllCommits());
-console.log('gitUtil.fullGitInfoAsJson() => ' + JSON.stringify(gitUtil.fullGitInfoAsJson()));
-
-if (otherDir) {
-    console.log('gitUtil.shortHash(' + otherDir + ') => ' + gitUtil.shortHash(otherDir));
-    console.log('gitUtil.fullHash(' + otherDir + ') => ' + gitUtil.fullHash(otherDir));
-    console.log('gitUtil.currentBranch(' + otherDir + ') => ' + gitUtil.currentBranch(otherDir));
-}
+console.log('gitInfoUtil.currentBranch() => ' + gitInfoUtil.currentBranch());
+console.log('gitInfoUtil.buildHost() => ' + gitInfoUtil.buildHost());
+console.log('gitInfoUtil.buildVersion() => ' + gitInfoUtil.buildVersion());
+console.log('gitInfoUtil.commitIdAbbrev => ' + gitInfoUtil.commitIdAbbrev());
+console.log('gitInfoUtil.commitIdDesc => ' + gitInfoUtil.commitIdDescAndTags(true));
+console.log('gitInfoUtil.commitIdFull() => ' + gitInfoUtil.commitIdFull());
+console.log('gitInfoUtil.lastCommitMsg() => ' + gitInfoUtil.lastCommitMsg());
+console.log('gitInfoUtil.commitUserInfo() => ' + gitInfoUtil.commitUserInfo());
+console.log('gitInfoUtil.dateOfLastCommit() => ' + gitInfoUtil.dateOfLastCommit());
+console.log('gitInfoUtil.isDirty() => ' + gitInfoUtil.isDirty());
+console.log('gitInfoUtil.remoteUrl() => ' + gitInfoUtil.remoteUrl());
+console.log('gitInfoUtil.commitIdDescAndTags() => ' + gitInfoUtil.commitIdDescAndTags());
+console.log('gitInfoUtil.closestTagCommitCount() => ' + gitInfoUtil.closestTagCommitCount());
+console.log('gitInfoUtil.countOfAllCommits() => ' + gitInfoUtil.countOfAllCommits());
+const customPropMap = new Map();
+customPropMap.set( "git.build.user.name" , "App User");
+customPropMap.set( "git.build.user.email" , "appuser@app.com");
+console.log('gitInfoUtil.gitInfoAsJson() => ' + gitInfoUtil.gitInfoAsJson(customPropMap));

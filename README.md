@@ -7,17 +7,19 @@ Generate repository git details
 ```js
 var git = require('npm-git-properties');
 
-console.log(git.shortHash());
-// 99ps5rr
+console.log(git.commitIdAbbrev());
+// 18f5104
 
-console.log(git.fullHash());
-// 799ps5rr54534hjk534kh534hk
+console.log(git.commitIdFull());
+// 18f51041eead0e4952bfe11987504e6fdf682a0f
 
 console.log(git.currentBranch());
-// master
+// v1.0.0
 ```
 
-To understand better, run the samples: `npm run samples`
+To understand better, run the examples: `node .\examples\example-simple.js`  or `node run .\examples\example-complex.js`
+
+To run test cases, run the file: `node .\tests\tests.js`
 
 ## Install
 
