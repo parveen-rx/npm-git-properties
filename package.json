@@ -12,18 +12,19 @@
   "scripts": {
     "examples": "node examples/example-simple",
     "examples-detailed": "node examples/example-complex",
-    "test": "node test-cases/tests"
+    "test": "node tests/tests"
   },
   "repository": {
     "type": "git",
     "url": "git@github.com:parveen-rx/npm-git-properties.git"
   },
   "dependencies": {
-    "escape-string-regexp": "^5.0.0",
+    "child_process": "^1.0.2",
     "graceful-fs": "^4.2.11",
+    "os": "^0.1.2",
+    "path": "^0.12.7",
     "shelljs": "^0.8.5"
   },
-  "devDependencies": {},
   "keywords": [],
   "contributors": [
     {
