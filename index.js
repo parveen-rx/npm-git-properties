@@ -96,16 +96,14 @@ const buildHost = () => {
 };
 
 const buildVersion = () => {
-    let projectVersion = 'N/A';
     const packageJsonPath = pathLib.join(__dirname, 'package.json');
     try {
         const data = gracefulFsLib.readFileSync(packageJsonPath, 'utf8');
         const packageJson = JSON.parse(data);
-        projectVersion = packageJson.version;
+        return packageJson.version;
     } catch (error) {
         return currentRepoName + ' could not read or parse package.json and error is: ' + error;
     }
-    return projectVersion;
 };
 
 const buildUserName = () => {
