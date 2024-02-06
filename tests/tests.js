@@ -73,4 +73,9 @@ assert.equal(result.constructor === String && JSON.parse(result).constructor ===
 result = git.gitInfoAsJson(customPropMap, true);
 assert.equal(result["git"]["build"]["user"]["name"] === userName && result["git"]["build"]["user"]["email"] === userEmail, true, 'gitInfoAsJson overrides result with custom property map');
 
+// Test createGitInfoFile
+result = git.createGitInfoFile(customPropMap);
+assert.equal(result.constructor === Boolean, true, 'createGitInfoFile creates as file as output');
+
+
 console.log('All test cases passed...');

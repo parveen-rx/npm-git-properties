@@ -32,6 +32,8 @@ const KEY_GIT_CLOSEST_TAG_NAME = "git.closest.tag.name";
 const KEY_GIT_CLOSEST_TAG_COMMIT_COUNT = "git.closest.tag.commit.count";
 const KEY_GIT_TOTAL_COMMIT_COUNT = "git.total.commit.count";
 
+const fileName = 'gitDetails.json';
+
 const _exeCmd = (cmd, args) => {
     let result;
     if (hasNativeExecSync) {
@@ -230,6 +232,19 @@ const gitInfoAsJson = (customGitPropMap, requireObject) => {
     return requireObject ? gitInfoObject : JSON.stringify(gitInfoObject, null, 2);
 };
 
+const createGitInfoFile = (customGitPropMap) => {
+    const gitInfoJson = gitInfoAsJson(customGitPropMap);
+    try {
+        if(gracefulFsLib.existsSync(fileName)){
+            gracefulFsLib.unlinkSync(fileName);
+        }
+        gracefulFsLib.writeFileSync(fileName, gitInfoJson);
+        return true;
+    } catch (error) {
+        throw new Error(currentRepoName + " has failed to create "+ fileName + " due to " + error);
+    }
+}
+
 module.exports = {
     currentBranch : currentBranch,
     buildHost: buildHost,
@@ -244,5 +259,6 @@ module.exports = {
     commitIdDescAndTags: commitIdDescAndTags,
     closestTagCommitCount: closestTagCommitCount,
     countOfAllCommits: countOfAllCommits,
-    gitInfoAsJson: gitInfoAsJson
+    gitInfoAsJson: gitInfoAsJson,
+    createGitInfoFile: createGitInfoFile
 };

@@ -20,3 +20,4 @@ const customPropMap = new Map();
 customPropMap.set( "git.build.user.name" , "App User");
 customPropMap.set( "git.build.user.email" , "appuser@app.com");
 console.log('gitInfoUtil.gitInfoAsJson() => ' + gitInfoUtil.gitInfoAsJson(customPropMap));
+console.log('gitInfoUtil.createGitInfoFile() => ' + gitInfoUtil.createGitInfoFile(customPropMap));
